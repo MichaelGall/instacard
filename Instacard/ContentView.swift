@@ -13,7 +13,14 @@ struct ContentView: View {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("Instacard!")
+            Button("Take Image") {
+                // Open camera to take a picture.
+            }
+            Button("Load Image") {
+                // Load an image from the album.
+            }
+            
         }
         .padding()
     }
