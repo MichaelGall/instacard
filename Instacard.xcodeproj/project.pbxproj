@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0165ACA42914BF5B00B71C79 /* SelectedImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0165ACA32914BF5B00B71C79 /* SelectedImageModel.swift */; };
+		0165ACA62914C5DD00B71C79 /* SelectedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0165ACA52914C5DD00B71C79 /* SelectedImageView.swift */; };
 		4C1A99952912A23C00F3B71F /* InstacardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A99942912A23C00F3B71F /* InstacardApp.swift */; };
 		4C1A99972912A23C00F3B71F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A99962912A23C00F3B71F /* ContentView.swift */; };
 		4C1A99992912A23E00F3B71F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A99982912A23E00F3B71F /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0165ACA32914BF5B00B71C79 /* SelectedImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImageModel.swift; sourceTree = "<group>"; };
+		0165ACA52914C5DD00B71C79 /* SelectedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImageView.swift; sourceTree = "<group>"; };
 		4C1A99912912A23C00F3B71F /* Instacard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instacard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1A99942912A23C00F3B71F /* InstacardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstacardApp.swift; sourceTree = "<group>"; };
 		4C1A99962912A23C00F3B71F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,6 +59,8 @@
 				4C1A99962912A23C00F3B71F /* ContentView.swift */,
 				4C1A99982912A23E00F3B71F /* Assets.xcassets */,
 				4C1A999A2912A23E00F3B71F /* Preview Content */,
+				0165ACA32914BF5B00B71C79 /* SelectedImageModel.swift */,
+				0165ACA52914C5DD00B71C79 /* SelectedImageView.swift */,
 			);
 			path = Instacard;
 			sourceTree = "<group>";
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0165ACA62914C5DD00B71C79 /* SelectedImageView.swift in Sources */,
+				0165ACA42914BF5B00B71C79 /* SelectedImageModel.swift in Sources */,
 				4C1A99972912A23C00F3B71F /* ContentView.swift in Sources */,
 				4C1A99952912A23C00F3B71F /* InstacardApp.swift in Sources */,
 			);

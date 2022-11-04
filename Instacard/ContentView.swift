@@ -6,20 +6,19 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ContentView: View {
+    @StateObject var viewModel = SelectedImageModel()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
+            SelectedImagePreview(selectedImageState: viewModel.selectedImageState)
             Text("Instacard!")
             Button("Take Image") {
                 // Open camera to take a picture.
             }
-            Button("Load Image") {
-                // Load an image from the album.
-            }
+            SelectImageFromAlbum(viewModel: viewModel)
             
         }
         .padding()
