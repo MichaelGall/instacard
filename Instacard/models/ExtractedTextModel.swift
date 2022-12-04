@@ -27,10 +27,9 @@ class ExtractedTextModel: ObservableObject {
     
     init(cgImage: CGImage) {
         self.cgImage = cgImage
-        extractText()
     }
     
-    private func extractText() {
+    public func startTextExtraction() {
         let requestHandler = VNImageRequestHandler(cgImage: cgImage)
         let request = VNRecognizeTextRequest(completionHandler: recognizeTextHandler)
         do {

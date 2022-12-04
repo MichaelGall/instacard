@@ -36,6 +36,7 @@ struct ExtractTextView: View {
     
     var body: some View {
         ExtractedTextView(extractedTextState: viewModel.extractedTextState)
+            .onAppear(perform: viewModel.startTextExtraction)
     }
 }
 
