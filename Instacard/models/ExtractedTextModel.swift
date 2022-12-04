@@ -30,64 +30,54 @@ class ExtractedTextModel: ObservableObject {
     
     struct ExtractionResult {
         let emails: [String]
-        var emailIndex = 0
-        
         let names: [String]
-        
         let phoneNumbers: [String]
-        var phoneNumberIndex = 0
-        
         let websites: [String]
-        var websiteIndex = 0
-        
         let other: [String]
         
         func suggestedEmail() -> String {
             if emails.isEmpty {
                 return ""
             }
-            return emails[emailIndex]
-        }
-        
-        mutating func nextSuggestedEmail() -> String {
-            if (emailIndex < emails.count - 1) {
-                emailIndex += 1
-            } else {
-                emailIndex = 0
-            }
-            return suggestedEmail()
+            return emails[0]
         }
         
         func suggestedPhoneNumber() -> String {
             if phoneNumbers.isEmpty {
                 return ""
             }
-            return phoneNumbers[phoneNumberIndex]
-        }
-        
-        mutating func nextSuggestedPhoneNumber() -> String {
-            if (phoneNumberIndex < phoneNumbers.count - 1) {
-                phoneNumberIndex += 1
-            } else {
-                phoneNumberIndex = 0
-            }
-            return suggestedPhoneNumber()
+            return phoneNumbers[0]
         }
         
         func suggestedWebsite() -> String {
             if websites.isEmpty {
                 return ""
             }
-            return websites[websiteIndex]
+            return websites[0]
         }
         
-        mutating func nextSuggestedWebsite() -> String {
-            if (websiteIndex < websites.count - 1) {
-                websiteIndex += 1
-            } else {
-                websiteIndex = 0
+        // TODO: Improve way of getting name.
+        func suggestedName() -> String {
+            if other.isEmpty {
+                return ""
             }
-            return suggestedWebsite()
+            return other[0]
+        }
+        
+        // TODO: Improve way of getting title.
+        func suggestedTitle() -> String {
+            if other.isEmpty {
+                return ""
+            }
+            return other[0]
+        }
+        
+        // TODO: Improve way of getting company.
+        func suggestedCompany() -> String {
+            if other.isEmpty {
+                return ""
+            }
+            return other[0]
         }
     }
     

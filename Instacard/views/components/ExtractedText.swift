@@ -18,9 +18,9 @@ struct ExtractedText: View {
         case .success(let extractionResult):
             VStack {
                 ContactForm(extractionResult: extractionResult)
-                ForEach(extractionResult.other, id: \.self) { otherString in
-                    Text(otherString)
-                }
+                //ForEach(extractionResult.other, id: \.self) { otherString in
+                //    Text(otherString)
+                //}
             }
         case .failure:
             Image(systemName: "exclationmark.triangle.fill")
