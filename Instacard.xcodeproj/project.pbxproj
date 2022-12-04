@@ -12,6 +12,7 @@
 		01DA804E293C4971005401DF /* ExtractTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA804D293C4971005401DF /* ExtractTextView.swift */; };
 		01DA8052293C4B34005401DF /* SelectImageInstructionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA8051293C4B34005401DF /* SelectImageInstructionCardView.swift */; };
 		01DA8054293C5331005401DF /* ExtractedTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA8053293C5331005401DF /* ExtractedTextModel.swift */; };
+		01DA8056293C5CED005401DF /* ExtractedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA8055293C5CED005401DF /* ExtractedTextView.swift */; };
 		4C1A99952912A23C00F3B71F /* InstacardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A99942912A23C00F3B71F /* InstacardApp.swift */; };
 		4C1A99972912A23C00F3B71F /* SelectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A99962912A23C00F3B71F /* SelectImageView.swift */; };
 		4C1A99992912A23E00F3B71F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C1A99982912A23E00F3B71F /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 		01DA804D293C4971005401DF /* ExtractTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractTextView.swift; sourceTree = "<group>"; };
 		01DA8051293C4B34005401DF /* SelectImageInstructionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageInstructionCardView.swift; sourceTree = "<group>"; };
 		01DA8053293C5331005401DF /* ExtractedTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractedTextModel.swift; sourceTree = "<group>"; };
+		01DA8055293C5CED005401DF /* ExtractedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractedTextView.swift; sourceTree = "<group>"; };
 		4C1A99912912A23C00F3B71F /* Instacard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instacard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1A99942912A23C00F3B71F /* InstacardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstacardApp.swift; sourceTree = "<group>"; };
 		4C1A99962912A23C00F3B71F /* SelectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageView.swift; sourceTree = "<group>"; };
@@ -42,6 +44,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01DA8057293C5D00005401DF /* models */ = {
+			isa = PBXGroup;
+			children = (
+				01DA8053293C5331005401DF /* ExtractedTextModel.swift */,
+				0165ACA32914BF5B00B71C79 /* SelectedImageModel.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		01DA8058293C5D13005401DF /* views */ = {
+			isa = PBXGroup;
+			children = (
+				01DA8059293C5D2B005401DF /* components */,
+				4C1A99962912A23C00F3B71F /* SelectImageView.swift */,
+				01DA804D293C4971005401DF /* ExtractTextView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		01DA8059293C5D2B005401DF /* components */ = {
+			isa = PBXGroup;
+			children = (
+				01DA8055293C5CED005401DF /* ExtractedTextView.swift */,
+				01DA8051293C4B34005401DF /* SelectImageInstructionCardView.swift */,
+				0165ACA52914C5DD00B71C79 /* SelectedImageView.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
 		4C1A99882912A23C00F3B71F = {
 			isa = PBXGroup;
 			children = (
@@ -61,15 +92,11 @@
 		4C1A99932912A23C00F3B71F /* Instacard */ = {
 			isa = PBXGroup;
 			children = (
+				01DA8058293C5D13005401DF /* views */,
+				01DA8057293C5D00005401DF /* models */,
 				4C1A99942912A23C00F3B71F /* InstacardApp.swift */,
-				0165ACA32914BF5B00B71C79 /* SelectedImageModel.swift */,
-				4C1A99962912A23C00F3B71F /* SelectImageView.swift */,
-				01DA8051293C4B34005401DF /* SelectImageInstructionCardView.swift */,
-				0165ACA52914C5DD00B71C79 /* SelectedImageView.swift */,
-				01DA804D293C4971005401DF /* ExtractTextView.swift */,
 				4C1A99982912A23E00F3B71F /* Assets.xcassets */,
 				4C1A999A2912A23E00F3B71F /* Preview Content */,
-				01DA8053293C5331005401DF /* ExtractedTextModel.swift */,
 			);
 			path = Instacard;
 			sourceTree = "<group>";
@@ -158,6 +185,7 @@
 				01DA804E293C4971005401DF /* ExtractTextView.swift in Sources */,
 				0165ACA42914BF5B00B71C79 /* SelectedImageModel.swift in Sources */,
 				4C1A99972912A23C00F3B71F /* SelectImageView.swift in Sources */,
+				01DA8056293C5CED005401DF /* ExtractedTextView.swift in Sources */,
 				4C1A99952912A23C00F3B71F /* InstacardApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

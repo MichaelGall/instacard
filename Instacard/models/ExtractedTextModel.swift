@@ -13,8 +13,7 @@ class ExtractedTextModel: ObservableObject {
     let cgImage: CGImage
     
     enum ExtractedTextState {
-        case empty
-        case loading(Progress)
+        case loading
         case success([String])
         case failure(Error)
     }
@@ -24,7 +23,7 @@ class ExtractedTextModel: ObservableObject {
         case textNotFound
     }
     
-    @Published private(set) var extractedTextState: ExtractedTextState = .empty
+    @Published private(set) var extractedTextState: ExtractedTextState = .loading
     
     init(cgImage: CGImage) {
         self.cgImage = cgImage
