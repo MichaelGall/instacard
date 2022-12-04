@@ -27,7 +27,7 @@ struct SelectImageView: View {
             
         }
         .padding()
-        .navigationTitle("Instacard")
+        .navigationTitle("Business Card")
     }
 }
 
