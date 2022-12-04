@@ -14,9 +14,15 @@ struct SelectedImage: View {
     var body: some View {
         switch selectedImageState {
         case .success(let image, let cgImage):
-            image.resizable()
-            NavigationLink(destination: ExtractTextView(cgImage: cgImage)) {
-                Text("Extract text")
+            VStack {
+                image.resizable()
+                NavigationLink {
+                    ExtractTextView(cgImage: cgImage)
+                } label: {
+                    Image(systemName: "rectangle.and.text.magnifyingglass")
+                    Text("Extract text")
+                }
+                .buttonStyle(.borderedProminent)
             }
         case .loading:
             ProgressView()
@@ -26,7 +32,7 @@ struct SelectedImage: View {
                 Image(systemName: "photo")
                     .font(.system(size: 80))
                     .foregroundColor(.black)
-                SelectImageInstructionCardView()
+                SelectImageInstructionCard()
             }
 
         case .failure:
@@ -52,8 +58,11 @@ struct SelectImageFromAlbum: View {
     
     var body: some View {
         PhotosPicker(selection: $viewModel.imageSelection, matching: .images, photoLibrary: .shared()) {
-            Text("Select Image")
+            Image(systemName: "photo")
+            Text("Select image")
+                .frame(maxWidth: .infinity)
+                .offset(x: -20, y: 0)  // Offset by icon width so text is centered
         }
-        .buttonStyle(.borderless)
+        .buttonStyle(.bordered)
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExtractedTextView: View {
+struct ExtractedText: View {
     let extractedTextState: ExtractedTextModel.ExtractedTextState
     
     var body: some View {
@@ -27,8 +27,8 @@ struct ExtractedTextView: View {
     }
 }
 
-struct ExtractedTextView_Previews: PreviewProvider {
+struct ExtractedText_Previews: PreviewProvider {
     static var previews: some View {
-        ExtractedTextView(extractedTextState: ExtractedTextModel.ExtractedTextState.loading)
+        ExtractedText(extractedTextState: ExtractedTextModel.ExtractedTextState.loading)
     }
 }

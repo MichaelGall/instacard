@@ -35,7 +35,7 @@ struct ExtractTextView: View {
     }
     
     var body: some View {
-        ExtractedTextView(extractedTextState: viewModel.extractedTextState)
+        ExtractedText(extractedTextState: viewModel.extractedTextState)
             .onAppear(perform: viewModel.startTextExtraction)
             .navigationTitle("Extracted Contact")
     }

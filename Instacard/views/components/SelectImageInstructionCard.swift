@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SelectImageInstructionCardView: View {
+struct SelectImageInstructionCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Got a business card?")
@@ -23,8 +23,8 @@ struct SelectImageInstructionCardView: View {
     }
 }
 
-struct SelectImageInstructionCardView_Previews: PreviewProvider {
+struct SelectImageInstructionCard_Previews: PreviewProvider {
     static var previews: some View {
-        SelectImageInstructionCardView()
+        SelectImageInstructionCard()
     }
 }

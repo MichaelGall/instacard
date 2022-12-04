@@ -13,14 +13,20 @@ struct SelectImageView: View {
     
     var body: some View {
         VStack {
-            Text("")
             SelectedImagePreview(selectedImageState: viewModel.selectedImageState)
-            Spacer()
-            HStack {
-                Button("Take Image") {
-                    // Open camera to take a picture.
+                .frame(maxHeight: .infinity)
+            VStack {
+                Button {
+                    print("'Take Photo' button clicked")
+                } label: {
+                    HStack {
+                        Image(systemName: "camera")
+                        Text("Take photo")
+                            .frame(maxWidth: .infinity)
+                            .offset(x: -20, y: 0) // Offset by icon width so text is centered
+                    }
                 }
-                Spacer()
+                .buttonStyle(.bordered)
                 SelectImageFromAlbum(viewModel: viewModel)
             }
 
