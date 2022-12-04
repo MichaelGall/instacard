@@ -22,6 +22,7 @@ struct ExtractedText: View {
                 //    Text(otherString)
                 //}
             }
+            .background(Color(UIColor.secondarySystemBackground))
         case .failure:
             Image(systemName: "exclationmark.triangle.fill")
                 .font(.system(size: 80))
