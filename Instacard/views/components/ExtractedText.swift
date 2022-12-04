@@ -15,9 +15,9 @@ struct ExtractedText: View {
         case .loading:
             ProgressView()
                 .progressViewStyle(.circular)
-        case .success(let recognizedStrings):
-            ForEach(recognizedStrings, id: \.self) { recognizedString in
-                Text(recognizedString)
+        case .success(let extractionResult):
+            ForEach(extractionResult.other, id: \.self) { otherString in
+                Text(otherString)
             }
         case .failure:
             Image(systemName: "exclationmark.triangle.fill")
