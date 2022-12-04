@@ -11,7 +11,9 @@ import SwiftUI
 struct InstacardApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                SelectImageView()
+            }
         }
     }
 }

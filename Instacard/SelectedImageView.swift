@@ -13,15 +13,22 @@ struct SelectedImage: View {
     
     var body: some View {
         switch selectedImageState {
-        case .success(let image):
+        case .success(let image, let cgImage):
             image.resizable()
+            NavigationLink(destination: ExtractTextView(cgImage: cgImage)) {
+                Text("Extract text")
+            }
         case .loading:
             ProgressView()
                 .progressViewStyle(.circular)
         case .empty:
-            Image(systemName: "photo")
-                .font(.system(size: 80))
-                .foregroundColor(.black)
+            VStack {
+                Image(systemName: "photo")
+                    .font(.system(size: 80))
+                    .foregroundColor(.black)
+                SelectImageInstructionCardView()
+            }
+
         case .failure:
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 80))

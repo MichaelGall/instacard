@@ -8,25 +8,31 @@
 import SwiftUI
 import PhotosUI
 
-struct ContentView: View {
+struct SelectImageView: View {
     @StateObject var viewModel = SelectedImageModel()
     
     var body: some View {
         VStack {
+            Text("")
             SelectedImagePreview(selectedImageState: viewModel.selectedImageState)
-            Text("Instacard!")
-            Button("Take Image") {
-                // Open camera to take a picture.
+            Spacer()
+            HStack {
+                Button("Take Image") {
+                    // Open camera to take a picture.
+                }
+                Spacer()
+                SelectImageFromAlbum(viewModel: viewModel)
             }
-            SelectImageFromAlbum(viewModel: viewModel)
+
             
         }
         .padding()
+        .navigationTitle("Instacard")
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct SelectImageView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        SelectImageView()
     }
 }
