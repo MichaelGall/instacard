@@ -30,10 +30,65 @@ class ExtractedTextModel: ObservableObject {
     
     struct ExtractionResult {
         let emails: [String]
+        var emailIndex = 0
+        
         let names: [String]
+        
         let phoneNumbers: [String]
+        var phoneNumberIndex = 0
+        
         let websites: [String]
+        var websiteIndex = 0
+        
         let other: [String]
+        
+        func suggestedEmail() -> String {
+            if emails.isEmpty {
+                return ""
+            }
+            return emails[emailIndex]
+        }
+        
+        mutating func nextSuggestedEmail() -> String {
+            if (emailIndex < emails.count - 1) {
+                emailIndex += 1
+            } else {
+                emailIndex = 0
+            }
+            return suggestedEmail()
+        }
+        
+        func suggestedPhoneNumber() -> String {
+            if phoneNumbers.isEmpty {
+                return ""
+            }
+            return phoneNumbers[phoneNumberIndex]
+        }
+        
+        mutating func nextSuggestedPhoneNumber() -> String {
+            if (phoneNumberIndex < phoneNumbers.count - 1) {
+                phoneNumberIndex += 1
+            } else {
+                phoneNumberIndex = 0
+            }
+            return suggestedPhoneNumber()
+        }
+        
+        func suggestedWebsite() -> String {
+            if websites.isEmpty {
+                return ""
+            }
+            return websites[websiteIndex]
+        }
+        
+        mutating func nextSuggestedWebsite() -> String {
+            if (websiteIndex < websites.count - 1) {
+                websiteIndex += 1
+            } else {
+                websiteIndex = 0
+            }
+            return suggestedWebsite()
+        }
     }
     
     @Published private(set) var extractedTextState: ExtractedTextState = .loading
@@ -77,9 +132,15 @@ class ExtractedTextModel: ObservableObject {
             // } else {
             //      unrecognizedStrings.append(recognizedString)
             // }
-            
-            // TODO: Remove this line after above commented-out logic is finished
-            unrecognizedStrings.append(recognizedString)
+            if recognizedString.hasEmail {
+                recognizedEmails.append(recognizedString.extractedEmail)
+            } else if recognizedString.hasPhoneNumber {
+                recognizedPhoneNumbers.append(recognizedString.extractedPhoneNumber)
+            } else if recognizedString.hasWebsite {
+                recognizedWebsites.append(recognizedString.extractedWebsite)
+            } else {
+                unrecognizedStrings.append(recognizedString)
+            }
         }
         let extractionResult = ExtractionResult(emails: recognizedEmails, names: recognizedNames, phoneNumbers: recognizedPhoneNumbers, websites: recognizedWebsites, other: unrecognizedStrings)
         extractedTextState = .success(extractionResult)

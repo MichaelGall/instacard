@@ -9,15 +9,18 @@ import SwiftUI
 
 struct ExtractedText: View {
     let extractedTextState: ExtractedTextModel.ExtractedTextState
-    
+        
     var body: some View {
         switch extractedTextState {
         case .loading:
             ProgressView()
                 .progressViewStyle(.circular)
         case .success(let extractionResult):
-            ForEach(extractionResult.other, id: \.self) { otherString in
-                Text(otherString)
+            VStack {
+                ContactForm(extractionResult: extractionResult)
+                ForEach(extractionResult.other, id: \.self) { otherString in
+                    Text(otherString)
+                }
             }
         case .failure:
             Image(systemName: "exclationmark.triangle.fill")
