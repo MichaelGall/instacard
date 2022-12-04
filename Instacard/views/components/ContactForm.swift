@@ -36,7 +36,6 @@ struct ContactForm: View {
         Form {
             Section(header: Text("Name")) {
                 TextField("Name", text: $name)
-                    .padding(.vertical, 10)
                 if extractionResult.other.count > 1 {
                     Button {
                         name = anotherName()
@@ -51,7 +50,6 @@ struct ContactForm: View {
             }
             Section(header: Text("Title")) {
                 TextField("Title", text: $title)
-                    .padding(.vertical, 10)
                 if extractionResult.other.count > 1 {
                     Button {
                         title = anotherTitle()
@@ -66,7 +64,6 @@ struct ContactForm: View {
             }
             Section(header: Text("Company")) {
                 TextField("Company", text: $company)
-                    .padding(.vertical, 10)
                 if extractionResult.other.count > 1 {
                     Button {
                         company = anotherCompany()
@@ -82,17 +79,14 @@ struct ContactForm: View {
             Section(header: Text("Email")) {
                 TextField("Email", text: $email)
                     .keyboardType(.emailAddress)
-                    .padding(.vertical, 10)
             }
             Section(header: Text("Phone number")) {
                 TextField("Phone number", text: $phoneNumber)
                     .keyboardType(.phonePad)
-                    .padding(.vertical, 10)
             }
             Section(header: Text("website")) {
                 TextField("Website", text: $website)
                     .keyboardType(.URL)
-                    .padding(.vertical, 10)
             }
         }
         .padding(20)
