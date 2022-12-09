@@ -119,7 +119,7 @@ class ExtractedTextModel: ObservableObject {
     }
     
     private func processRecognizedStrings(recognizedStrings: [String]) {
-        let mlModel = try? ContactClassifier(configuration: MLModelConfiguration()).model
+        let mlModel = try? ContactClassifier2(configuration: MLModelConfiguration()).model
         let contactPredictor =  try? NLModel(mlModel: mlModel!)
         
         for recognizedString in recognizedStrings {

@@ -11,7 +11,7 @@
 		012BF75C293D57F100BC8AEF /* ContactForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012BF75B293D57F100BC8AEF /* ContactForm.swift */; };
 		0165ACA42914BF5B00B71C79 /* SelectedImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0165ACA32914BF5B00B71C79 /* SelectedImageModel.swift */; };
 		0165ACA62914C5DD00B71C79 /* SelectedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0165ACA52914C5DD00B71C79 /* SelectedImage.swift */; };
-		01B1D06A2942DAB500BDA44D /* ContactClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 01B1D0692942DAB500BDA44D /* ContactClassifier.mlmodel */; };
+		01B1D06D2942F6D600BDA44D /* ContactClassifier2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 01B1D06C2942F6D600BDA44D /* ContactClassifier2.mlmodel */; };
 		01DA804E293C4971005401DF /* ExtractTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA804D293C4971005401DF /* ExtractTextView.swift */; };
 		01DA8052293C4B34005401DF /* SelectImageInstructionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA8051293C4B34005401DF /* SelectImageInstructionCard.swift */; };
 		01DA8054293C5331005401DF /* ExtractedTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA8053293C5331005401DF /* ExtractedTextModel.swift */; };
@@ -27,7 +27,7 @@
 		012BF75B293D57F100BC8AEF /* ContactForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactForm.swift; sourceTree = "<group>"; };
 		0165ACA32914BF5B00B71C79 /* SelectedImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImageModel.swift; sourceTree = "<group>"; };
 		0165ACA52914C5DD00B71C79 /* SelectedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImage.swift; sourceTree = "<group>"; };
-		01B1D0692942DAB500BDA44D /* ContactClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ContactClassifier.mlmodel; sourceTree = "<group>"; };
+		01B1D06C2942F6D600BDA44D /* ContactClassifier2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ContactClassifier2.mlmodel; sourceTree = "<group>"; };
 		01DA804D293C4971005401DF /* ExtractTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractTextView.swift; sourceTree = "<group>"; };
 		01DA8051293C4B34005401DF /* SelectImageInstructionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageInstructionCard.swift; sourceTree = "<group>"; };
 		01DA8053293C5331005401DF /* ExtractedTextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractedTextModel.swift; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		4C1A99932912A23C00F3B71F /* Instacard */ = {
 			isa = PBXGroup;
 			children = (
-				01B1D0692942DAB500BDA44D /* ContactClassifier.mlmodel */,
+				01B1D06C2942F6D600BDA44D /* ContactClassifier2.mlmodel */,
 				012BF758293D390200BC8AEF /* extensions */,
 				01DA8058293C5D13005401DF /* views */,
 				01DA8057293C5D00005401DF /* models */,
@@ -204,8 +204,8 @@
 				01DA804E293C4971005401DF /* ExtractTextView.swift in Sources */,
 				0165ACA42914BF5B00B71C79 /* SelectedImageModel.swift in Sources */,
 				4C1A99972912A23C00F3B71F /* SelectImageView.swift in Sources */,
-				01B1D06A2942DAB500BDA44D /* ContactClassifier.mlmodel in Sources */,
 				01DA8056293C5CED005401DF /* ExtractedText.swift in Sources */,
+				01B1D06D2942F6D600BDA44D /* ContactClassifier2.mlmodel in Sources */,
 				4C1A99952912A23C00F3B71F /* InstacardApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,6 +335,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Instacard/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -363,6 +364,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Instacard/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
