@@ -8,14 +8,19 @@
 import Foundation
 import PhotosUI
 import Vision
+import NaturalLanguage
+import CoreML
 
 class ExtractedTextModel: ObservableObject {
     let cgImage: CGImage
+    var recognizedCompanies: [String] = []
     var recognizedEmails: [String] = []
+    var recognizedJobs: [String] = []
     var recognizedNames: [String] = []
     var recognizedPhoneNumbers: [String] = []
     var recognizedWebsites: [String] = []
     var unrecognizedStrings: [String] = []
+    
     
     enum ExtractedTextState {
         case loading
@@ -29,7 +34,9 @@ class ExtractedTextModel: ObservableObject {
     }
     
     struct ExtractionResult {
+        let companies: [String]
         let emails: [String]
+        let jobs: [String]
         let names: [String]
         let phoneNumbers: [String]
         let websites: [String]
@@ -56,28 +63,31 @@ class ExtractedTextModel: ObservableObject {
             return websites[0]
         }
         
-        // TODO: Improve way of getting name.
         func suggestedName() -> String {
-            if other.isEmpty {
-                return ""
+            if !names.isEmpty {
+                return names[0]
+            } else if !other.isEmpty {
+                return other[0]
             }
-            return other[0]
+            return ""
         }
         
-        // TODO: Improve way of getting title.
         func suggestedTitle() -> String {
-            if other.isEmpty {
-                return ""
+            if !jobs.isEmpty {
+                return jobs[0]
+            } else if !other.isEmpty {
+                return other[0]
             }
-            return other[0]
+            return ""
         }
         
-        // TODO: Improve way of getting company.
         func suggestedCompany() -> String {
-            if other.isEmpty {
-                return ""
+            if !companies.isEmpty {
+                return companies[0]
+            } else if !other.isEmpty {
+                return other[0]
             }
-            return other[0]
+            return ""
         }
     }
     
@@ -109,30 +119,45 @@ class ExtractedTextModel: ObservableObject {
     }
     
     private func processRecognizedStrings(recognizedStrings: [String]) {
+        let mlModel = try? ContactClassifier(configuration: MLModelConfiguration()).model
+        let contactPredictor =  try? NLModel(mlModel: mlModel!)
+        
         for recognizedString in recognizedStrings {
-            // TODO: Finish this logic
-            // if (recognizedString looks like an email) {
-            //      recognizedEmails.append(recognizedString)
-            // } else if (recognizedString looks like a phone number) {
-            //      recognizedPhoneNumbers.append(recognizedString)
-            // } else if (recognizedString looks like a website) {
-            //      recognizedWebsites.append(recognizedString) {
-            // } else if (recognizedString looks likes a name) {
-            //      recognizedNames.append(recognizedName)
-            // } else {
-            //      unrecognizedStrings.append(recognizedString)
-            // }
-            if recognizedString.hasEmail {
-                recognizedEmails.append(recognizedString.extractedEmail)
-            } else if recognizedString.hasPhoneNumber {
-                recognizedPhoneNumbers.append(recognizedString.extractedPhoneNumber)
-            } else if recognizedString.hasWebsite {
-                recognizedWebsites.append(recognizedString.extractedWebsite)
+            let extractedEmail = recognizedString.extractedEmail
+            let extractedWebsite = recognizedString.extractedWebsite
+            let extractedPhoneNumber = recognizedString.extractedPhoneNumber
+            
+            if (!extractedEmail.isEmpty) {
+                recognizedEmails.append(extractedEmail)
+            } else if (!extractedWebsite.isEmpty) {
+                recognizedWebsites.append(extractedWebsite)
+            } else if (!extractedPhoneNumber.isEmpty) {
+                recognizedPhoneNumbers.append(extractedPhoneNumber)
             } else {
-                unrecognizedStrings.append(recognizedString)
+                let label = contactPredictor?.predictedLabel(for: recognizedString)
+                switch label {
+                case "name":
+                    recognizedNames.append(recognizedString)
+                    break
+                case "job":
+                    recognizedJobs.append(recognizedString)
+                    break
+                case "company":
+                    recognizedCompanies.append(recognizedString)
+                    break
+                default:
+                    unrecognizedStrings.append(recognizedString)
+                    break
+                }
             }
         }
-        let extractionResult = ExtractionResult(emails: recognizedEmails, names: recognizedNames, phoneNumbers: recognizedPhoneNumbers, websites: recognizedWebsites, other: unrecognizedStrings)
+        let extractionResult = ExtractionResult(companies: recognizedCompanies,
+                                                emails: recognizedEmails,
+                                                jobs: recognizedJobs,
+                                                names: recognizedNames,
+                                                phoneNumbers: recognizedPhoneNumbers,
+                                                websites: recognizedWebsites,
+                                                other: unrecognizedStrings)
         extractedTextState = .success(extractionResult)
     }
 }
