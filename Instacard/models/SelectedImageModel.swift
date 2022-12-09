@@ -17,7 +17,7 @@ class SelectedImageModel: ObservableObject {
     enum SelectedImageState {
         case empty
         case loading(Progress)
-        case success(Image)
+        case success(Image, CGImage)
         case failure(Error)
     }
     
@@ -27,24 +27,19 @@ class SelectedImageModel: ObservableObject {
     
     struct SelectedImage: Transferable {
         let image: Image
+        let cgImage: CGImage
         
         static var transferRepresentation: some TransferRepresentation {
             DataRepresentation(importedContentType: .image) { data in
-            #if canImport(AppKit)
-                guard let nsImage = NSImage(data: data) else {
-                    throw TransferError.importFailed
-                }
-                let image = Image(nsImage: nsImage)
-                return SelectedImage(image: image)
-            #elseif canImport(UIKit)
                 guard let uiImage = UIImage(data: data) else {
                     throw TransferError.importFailed
                 }
                 let image = Image(uiImage: uiImage)
-                return SelectedImage(image: image)
-            #else
-                throw TransferError.importFailed
-            #endif
+                
+                guard let cgImage = uiImage.cgImage else {
+                    throw TransferError.importFailed
+                }
+                return SelectedImage(image: image, cgImage: cgImage)
             }
         }
     }
@@ -71,7 +66,7 @@ class SelectedImageModel: ObservableObject {
                 }
                 switch result {
                 case .success(let selectedImage?):
-                    self.selectedImageState = .success(selectedImage.image)
+                    self.selectedImageState = .success(selectedImage.image, selectedImage.cgImage)
                 case .success(nil):
                     self.selectedImageState = .empty
                 case .failure(let error):
