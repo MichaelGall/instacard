@@ -12,6 +12,9 @@ import SwiftUI
 import PhotosUI
 import CoreTransferable
 
+/**
+ Models the async process of selecting an image from the photo picker.
+ */
 @MainActor
 class SelectedImageModel: ObservableObject {
     enum SelectedImageState {

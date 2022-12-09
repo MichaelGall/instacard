@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContactForm: View {
-    let extractionResult: ExtractedTextModel.ExtractionResult
+    let extractionResult: ExtractionResult
     
     @State private var name: String
-    @State private var title: String
+    @State private var job: String
     @State private var company: String
     @State private var email: String
     @State private var phoneNumber: String
@@ -21,15 +21,15 @@ struct ContactForm: View {
     @State private var titleIndex = 0
     @State private var companyIndex = 0
     
-    init(extractionResult: ExtractedTextModel.ExtractionResult) {
+    init(extractionResult: ExtractionResult) {
         self.extractionResult = extractionResult
         
-        name = extractionResult.suggestedName()
-        title = extractionResult.suggestedTitle()
-        company = extractionResult.suggestedCompany()
-        email = extractionResult.suggestedEmail()
-        phoneNumber = extractionResult.suggestedPhoneNumber()
-        website = extractionResult.suggestedWebsite()
+        name = extractionResult.suggestName()
+        job = extractionResult.suggestJob()
+        company = extractionResult.suggestCompany()
+        email = extractionResult.suggestEmail()
+        phoneNumber = extractionResult.suggestPhoneNumber()
+        website = extractionResult.suggestWebsite()
     }
     
     var body: some View {
@@ -48,11 +48,11 @@ struct ContactForm: View {
                     .buttonStyle(.bordered)
                 }
             }
-            Section(header: Text("Title")) {
-                TextField("Title", text: $title)
+            Section(header: Text("Job Title")) {
+                TextField("Job Title", text: $job)
                 if extractionResult.jobs.count > 1 {
                     Button {
-                        title = anotherTitle()
+                        job = anotherTitle()
                     } label: {
                         HStack {
                             Image(systemName: "arrow.clockwise")

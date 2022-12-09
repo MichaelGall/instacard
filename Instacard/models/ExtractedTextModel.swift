@@ -11,153 +11,183 @@ import Vision
 import NaturalLanguage
 import CoreML
 
+/**
+ Models the text extraction process using ML computer vision and natural language model.
+ */
 class ExtractedTextModel: ObservableObject {
+    // Property to store image which text will be extracted from.
     let cgImage: CGImage
-    var recognizedCompanies: [String] = []
-    var recognizedEmails: [String] = []
-    var recognizedJobs: [String] = []
-    var recognizedNames: [String] = []
-    var recognizedPhoneNumbers: [String] = []
-    var recognizedWebsites: [String] = []
-    var unrecognizedStrings: [String] = []
     
+    // Properties used to store extracted text from image after processing and
+    // classification.
+    var companies: [Prediction] = []
+    var emails: [String] = []
+    var jobs: [Prediction] = []
+    var names: [Prediction] = []
+    var phoneNumbers: [String] = []
+    var websites: [String] = []
+    var other: [String] = []
     
+    // States of async process for extracting text from image.
     enum ExtractedTextState {
         case loading
         case success(ExtractionResult)
         case failure(Error)
     }
     
+    // Types of errors encountered on failure to extract text from image.
     enum ExtractionError: Error {
         case extractionFailed
         case textNotFound
     }
     
-    struct ExtractionResult {
-        let companies: [String]
-        let emails: [String]
-        let jobs: [String]
-        let names: [String]
-        let phoneNumbers: [String]
-        let websites: [String]
-        let other: [String]
-        
-        func suggestedEmail() -> String {
-            if emails.isEmpty {
-                return ""
-            }
-            return emails[0]
-        }
-        
-        func suggestedPhoneNumber() -> String {
-            if phoneNumbers.isEmpty {
-                return ""
-            }
-            return phoneNumbers[0]
-        }
-        
-        func suggestedWebsite() -> String {
-            if websites.isEmpty {
-                return ""
-            }
-            return websites[0]
-        }
-        
-        func suggestedName() -> String {
-            if !names.isEmpty {
-                return names[0]
-            } else if !other.isEmpty {
-                return other[0]
-            }
-            return ""
-        }
-        
-        func suggestedTitle() -> String {
-            if !jobs.isEmpty {
-                return jobs[0]
-            } else if !other.isEmpty {
-                return other[0]
-            }
-            return ""
-        }
-        
-        func suggestedCompany() -> String {
-            if !companies.isEmpty {
-                return companies[0]
-            } else if !other.isEmpty {
-                return other[0]
-            }
-            return ""
-        }
+    // A prediction.
+    struct Prediction {
+        let str: String
+        let score: Double
     }
     
+    // Track state of async process to extract text from image.
     @Published private(set) var extractedTextState: ExtractedTextState = .loading
     
+    /**
+     Initializes an ExtractedTextModel with an image that will be used for text extraction.
+     */
     init(cgImage: CGImage) {
         self.cgImage = cgImage
     }
     
+    /**
+     Make a request via vision framework to extract text from an image.
+     */
     public func startTextExtraction() {
         let requestHandler = VNImageRequestHandler(cgImage: cgImage)
-        let request = VNRecognizeTextRequest(completionHandler: recognizeTextHandler)
+        let request = VNRecognizeTextRequest(completionHandler: handleTextExtraction)
         do {
             try requestHandler.perform([request])
         } catch {
             extractedTextState = .failure(ExtractionError.extractionFailed)
         }
     }
-    
-    private func recognizeTextHandler(request: VNRequest, error: Error?) {
+
+    /**
+     Handles text extraction.
+     
+     - Parameter request: The text extraction request
+     - Parameter error: An error from text extraction
+     */
+    private func handleTextExtraction(request: VNRequest, error: Error?) {
         guard let observations = request.results as? [VNRecognizedTextObservation] else {
             extractedTextState = .failure(ExtractionError.textNotFound)
             return
         }
-        let recognizedStrings = observations.compactMap { observation in
+        let strings = observations.compactMap { observation in
             return observation.topCandidates(1).first?.string
         }
-        processRecognizedStrings(recognizedStrings: recognizedStrings)
+        processStrings(strings: strings)
     }
     
-    private func processRecognizedStrings(recognizedStrings: [String]) {
-        let mlModel = try? ContactClassifier2(configuration: MLModelConfiguration()).model
-        let contactPredictor =  try? NLModel(mlModel: mlModel!)
+
+    /**
+     Processes strings extracted from an image in order to create an extraction result containing
+     contact information that was embedded in the image.
+     
+     - Parameter strings: The strings extracted from an image.
+     */
+    private func processStrings(strings: [String]) {
+        let mlModel = try? ContactClassifier2(configuration: MLModelConfiguration())
+            .model
+        let predictor = try? NLModel(mlModel: mlModel!)
         
-        for recognizedString in recognizedStrings {
-            let extractedEmail = recognizedString.extractedEmail
-            let extractedWebsite = recognizedString.extractedWebsite
-            let extractedPhoneNumber = recognizedString.extractedPhoneNumber
-            
-            if (!extractedEmail.isEmpty) {
-                recognizedEmails.append(extractedEmail)
-            } else if (!extractedWebsite.isEmpty) {
-                recognizedWebsites.append(extractedWebsite)
-            } else if (!extractedPhoneNumber.isEmpty) {
-                recognizedPhoneNumbers.append(extractedPhoneNumber)
-            } else {
-                let label = contactPredictor?.predictedLabel(for: recognizedString)
-                switch label {
-                case "name":
-                    recognizedNames.append(recognizedString)
-                    break
-                case "job":
-                    recognizedJobs.append(recognizedString)
-                    break
-                case "company":
-                    recognizedCompanies.append(recognizedString)
-                    break
-                default:
-                    unrecognizedStrings.append(recognizedString)
-                    break
-                }
+        for str in strings {
+            let didExtractContactInfo = extractContactInfo(str: str)
+            if (!didExtractContactInfo) {
+                predictContactInfo(str: str, predictor: predictor!)
             }
         }
-        let extractionResult = ExtractionResult(companies: recognizedCompanies,
-                                                emails: recognizedEmails,
-                                                jobs: recognizedJobs,
-                                                names: recognizedNames,
-                                                phoneNumbers: recognizedPhoneNumbers,
-                                                websites: recognizedWebsites,
-                                                other: unrecognizedStrings)
-        extractedTextState = .success(extractionResult)
+        
+        let result = ExtractionResult(companies: predictionsToStrings(predictions: companies),
+                                      emails: emails,
+                                      jobs: predictionsToStrings(predictions: jobs),
+                                      names: predictionsToStrings(predictions: names),
+                                      phoneNumbers: phoneNumbers,
+                                      websites: websites,
+                                      other: other)
+        
+        extractedTextState = .success(result)
+    }
+    
+    /**
+     Extracts contact information (i.e. email, phone number, website) by extracting it from a string.
+     
+     - Parameter str: The string to try and extract contact information from.
+     
+     - Returns: True if any contact information was extracted. False otherwise.
+    */
+    private func extractContactInfo(str: String) -> Bool {
+        let email = str.extractedEmail
+        let phoneNumber = str.extractedPhoneNumber
+        let website = str.extractedWebsite
+        
+        if (!email.isEmpty) {
+            emails.append(email)
+            return true // extracted email
+        }
+        
+        if (!phoneNumber.isEmpty) {
+            phoneNumbers.append(phoneNumber)
+            return true // extracted phone number
+        }
+        
+        if (!website.isEmpty) {
+            websites.append(website)
+            return true // extracted website
+        }
+        
+        return false // Failed to extract anything from string
+    }
+    
+    /**
+     Predicts what type of contact information (i.e. name, job, company) a string is by using a natural language model.
+     
+     - Parameter str: The string to try to predict what type of contact information it is.
+     - Parameter predictor: The natural language model to use for prediction.
+     */
+    private func predictContactInfo(str: String, predictor: NLModel) {
+        let hypotheses = predictor.predictedLabelHypotheses(for: str,
+                                                            maximumCount: 10)
+        for (label, score) in hypotheses {
+            switch label {
+            case "name":
+                names.append(Prediction(str: str, score: score))
+                break
+            case "job":
+                jobs.append(Prediction(str: str, score: score))
+                break
+            case "company":
+                companies.append(Prediction(str: str, score: score))
+                break
+            default:
+                other.append(str)
+                break
+            }
+        }
+    }
+    
+    /**
+     Sorts predictions from highest to lowest and then convers them to strings such that the first
+     string in the array is the best prediction.
+     
+     - Parameter predictions: The predictions.
+     
+     - Returns: The sorted string values of the predictions.
+     */
+    private func predictionsToStrings(predictions: [Prediction]) -> [String] {
+        // Highest predictions first.
+        let sortedPredictions = predictions.sorted {
+            $0.score > $1.score
+        }
+        
+        return sortedPredictions.map { $0.str }
     }
 }
