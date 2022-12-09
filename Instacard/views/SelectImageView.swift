@@ -29,8 +29,6 @@ struct SelectImageView: View {
                 .buttonStyle(.bordered)
                 SelectImageFromAlbum(viewModel: viewModel)
             }
-
-            
         }
         .padding()
         .navigationTitle("Business Card")

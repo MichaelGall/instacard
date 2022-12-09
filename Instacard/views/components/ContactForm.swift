@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContactForm: View {
-    let extractionResult: ExtractedTextModel.ExtractionResult
+    let extractionResult: ExtractionResult
     
     @State private var name: String
-    @State private var title: String
+    @State private var job: String
     @State private var company: String
     @State private var email: String
     @State private var phoneNumber: String
@@ -21,22 +21,22 @@ struct ContactForm: View {
     @State private var titleIndex = 0
     @State private var companyIndex = 0
     
-    init(extractionResult: ExtractedTextModel.ExtractionResult) {
+    init(extractionResult: ExtractionResult) {
         self.extractionResult = extractionResult
         
-        name = extractionResult.suggestedName()
-        title = extractionResult.suggestedTitle()
-        company = extractionResult.suggestedCompany()
-        email = extractionResult.suggestedEmail()
-        phoneNumber = extractionResult.suggestedPhoneNumber()
-        website = extractionResult.suggestedWebsite()
+        name = extractionResult.suggestName()
+        job = extractionResult.suggestJob()
+        company = extractionResult.suggestCompany()
+        email = extractionResult.suggestEmail()
+        phoneNumber = extractionResult.suggestPhoneNumber()
+        website = extractionResult.suggestWebsite()
     }
     
     var body: some View {
         Form {
             Section(header: Text("Name")) {
                 TextField("Name", text: $name)
-                if extractionResult.other.count > 1 {
+                if extractionResult.names.count > 1 {
                     Button {
                         name = anotherName()
                     } label: {
@@ -48,11 +48,11 @@ struct ContactForm: View {
                     .buttonStyle(.bordered)
                 }
             }
-            Section(header: Text("Title")) {
-                TextField("Title", text: $title)
-                if extractionResult.other.count > 1 {
+            Section(header: Text("Job Title")) {
+                TextField("Job Title", text: $job)
+                if extractionResult.jobs.count > 1 {
                     Button {
-                        title = anotherTitle()
+                        job = anotherTitle()
                     } label: {
                         HStack {
                             Image(systemName: "arrow.clockwise")
@@ -64,7 +64,7 @@ struct ContactForm: View {
             }
             Section(header: Text("Company")) {
                 TextField("Company", text: $company)
-                if extractionResult.other.count > 1 {
+                if extractionResult.companies.count > 1 {
                     Button {
                         company = anotherCompany()
                     } label: {
@@ -93,35 +93,35 @@ struct ContactForm: View {
     }
     
     private func anotherName() -> String {
-        if extractionResult.other.count == 0 {
+        if extractionResult.names.count == 0 {
             return ""
-        } else if (nameIndex < extractionResult.other.count - 1) {
+        } else if (nameIndex < extractionResult.names.count - 1) {
             nameIndex = nameIndex + 1
         } else {
             nameIndex = 0
         }
-        return extractionResult.other[nameIndex]
+        return extractionResult.names[nameIndex]
     }
     
     private func anotherTitle() -> String {
-        if extractionResult.other.count == 0 {
+        if extractionResult.jobs.count == 0 {
             return ""
-        } else if (titleIndex < extractionResult.other.count - 1) {
+        } else if (titleIndex < extractionResult.jobs.count - 1) {
             titleIndex = titleIndex + 1
         } else {
             titleIndex = 0
         }
-        return extractionResult.other[titleIndex]
+        return extractionResult.jobs[titleIndex]
     }
     
     private func anotherCompany() -> String {
-        if extractionResult.other.count == 0 {
+        if extractionResult.companies.count == 0 {
             return ""
-        } else if (companyIndex < extractionResult.other.count - 1) {
+        } else if (companyIndex < extractionResult.companies .count - 1) {
             companyIndex = companyIndex + 1
         } else {
             companyIndex = 0
         }
-        return extractionResult.other[companyIndex]
+        return extractionResult.companies[companyIndex]
     }
 }
