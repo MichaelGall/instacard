@@ -5,7 +5,7 @@
 //  Created by Nick Kenyeres on 2022-12-11.
 //
 
-import UIKit
+import Foundation
 import Contacts
 
 /**
@@ -50,6 +50,8 @@ struct ContactModel {
     
     /**
      Save a contact to the user's contacts store.
+     
+     - Parameters handleCompletion: Closure to be invoked on completion. Passed true if successful; false otherwise.
      */
     func save(handleCompletion: ((_: Bool) -> Void)) {
         let contact = CNMutableContact()
@@ -96,12 +98,9 @@ struct ContactModel {
     /**
      Get part of a name from the full name.
      
-     This operates under the assumption that every substring separated by a space
-     except the last one is part of the given name. The last string is the surname.
-     In cases with multiple surnames, the surnames are assumed to be hyphenated
-     and not separated by spaces.
+     - Parameter extract: The part of the full name to extract.
      
-     - Parameter get: The part of the full name to get.
+     - Returns: The extracted part of the name or an empty string if not able to extract.
      */
     private func fromFullName(extract: String) -> String {
         guard extract == "familyName" || extract == "givenName" else {
@@ -114,24 +113,22 @@ struct ContactModel {
             return ""
         }
         
-        // If there is only one part, assume it is the given name.
-        if (nameParts.count == 1) {
-            return extract == "givenName" ? nameParts[0] : ""
+        // Assume given name is first part of the name.
+        if (extract == "givenName") {
+            return nameParts[0]
         }
         
-        // Assume the last name part is the family name.
-        if (extract == "familyName") {
-            return nameParts[nameParts.count - 1]
+        // Assume family name is everything after the given name.
+        guard nameParts.count > 1 else {
+            return ""
         }
-        
-        // Assume everything but the last name part is the given name.
-        var givenName = ""
+        var familyName = ""
         for (index, namePart) in nameParts.enumerated() {
-            guard index < nameParts.count - 1 else {
-                break
+            guard index > 0 else {
+                continue
             }
-            givenName = givenName + namePart + " "
+            familyName = familyName + namePart + " "
         }
-        return givenName.trimmingCharacters(in: .whitespaces)
+        return familyName.trimmingCharacters(in: .whitespaces)
     }
 }

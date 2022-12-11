@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ContactForm: View {
+    /** The result of extracting the contact from the image. */
     let extractionResult: ExtractionResult
     
+    /** The result of adding the contact to the user's contacts. */
     struct ContactResult: Identifiable {
         var id: String
         let message: String
