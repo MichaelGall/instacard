@@ -59,6 +59,18 @@ class SelectedImageModel: ObservableObject {
             }
         }
     }
+    // Michael Gall:
+    // Handles UIImage selection from camera instead of photopicker
+    @Published var uiImageSelection: UIImage? = nil {
+        didSet {
+            if let uiImageSelection {
+                selectedImageState = .success(Image(uiImage: uiImageSelection), uiImageSelection.cgImage!)
+            } else {
+                selectedImageState = .empty
+            }
+        }
+    }
+    
     
     private func loadTransferable(from imageSelection: PhotosPickerItem) -> Progress {
         return imageSelection.loadTransferable(type: SelectedImage.self) { result in
