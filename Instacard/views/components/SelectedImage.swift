@@ -115,10 +115,10 @@ struct ImagePicker: UIViewControllerRepresentable {
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             parent.presentationMode.wrappedValue.dismiss()
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                // Add the selected image to the main view model, and update the selection
                 parent.selectedImage = image
+                parent.viewModel.uiImageSelection = image
                 
-                // Access to the image here in parent.selectedImage
-                // TODO: Now that we have the selected UIImage, how do I get it added as a SelectedImageModel to update the main view model?
             }
         }
     }
