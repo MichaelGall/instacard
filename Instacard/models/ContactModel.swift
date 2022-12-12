@@ -2,8 +2,6 @@
 //  ContactModel.swift
 //  Instacard
 //
-//  Created by Nick Kenyeres on 2022-12-11.
-//
 
 import Foundation
 import Contacts

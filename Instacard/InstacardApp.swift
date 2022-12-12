@@ -2,8 +2,6 @@
 //  InstacardApp.swift
 //  Instacard
 //
-//  Created by Michael Gall on 2022-11-02.
-//
 
 import SwiftUI
 

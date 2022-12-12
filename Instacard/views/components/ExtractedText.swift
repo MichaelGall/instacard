@@ -2,11 +2,10 @@
 //  ExtractedTextView.swift
 //  Instacard
 //
-//  Created by Nick Kenyeres on 2022-12-03.
-//
 
 import SwiftUI
 
+/** Shows contact extracted from app and provides user with ability to edit/save.  */
 struct ExtractedText: View {
     let extractedTextState: ExtractedTextModel.ExtractedTextState
         
@@ -18,9 +17,6 @@ struct ExtractedText: View {
         case .success(let extractionResult):
             VStack {
                 ContactForm(extractionResult: extractionResult)
-                //ForEach(extractionResult.other, id: \.self) { otherString in
-                //    Text(otherString)
-                //}
             }
             .background(Color(UIColor.secondarySystemBackground))
         case .failure:

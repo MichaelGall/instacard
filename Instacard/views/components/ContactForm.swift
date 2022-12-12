@@ -2,11 +2,10 @@
 //  ContactForm.swift
 //  Instacard
 //
-//  Created by Nick Kenyeres on 2022-12-04.
-//
 
 import SwiftUI
 
+/** Handles editing an extracted contact and saving it to the user's contacts. */
 struct ContactForm: View {
     /** The result of extracting the contact from the image. */
     let extractionResult: ExtractionResult

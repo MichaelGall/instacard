@@ -2,8 +2,6 @@
 //  String.swift
 //  Instacard
 //
-//  Created by Nick Kenyeres on 2022-12-04.
-//
 
 import Foundation
 

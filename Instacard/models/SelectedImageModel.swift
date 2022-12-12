@@ -2,8 +2,6 @@
 //  ImageModel.swift
 //  Instacard
 //
-//  Created by Nick Kenyeres on 2022-11-03.
-//
 //  Adapted from Apple's sample code: Bringing Photos picker to your SwiftUI app
 //  see: https://developer.apple.com/documentation/photokit/bringing_photos_picker_to_your_swiftui_app
 //
