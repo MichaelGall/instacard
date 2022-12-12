@@ -10,14 +10,19 @@ import PhotosUI
 
 struct SelectImageView: View {
     @StateObject var viewModel = SelectedImageModel()
+    // "selected" image by camera
+    @State private var image = UIImage()
+    // Whether to show the photo taking view or not
+    @State private var showPhotoTaker = false
     
     var body: some View {
         VStack {
             SelectedImagePreview(selectedImageState: viewModel.selectedImageState)
                 .frame(maxHeight: .infinity)
             VStack {
+                // Taking an image
                 Button {
-                    print("'Take Photo' button clicked")
+                    showPhotoTaker = true
                 } label: {
                     HStack {
                         Image(systemName: "camera")
@@ -27,6 +32,11 @@ struct SelectImageView: View {
                     }
                 }
                 .buttonStyle(.bordered)
+                .sheet(isPresented: $showPhotoTaker) {
+                    SelectImageByTaking(viewModel: viewModel, selectedImage: $image)
+                
+                }
+                // Album images
                 SelectImageFromAlbum(viewModel: viewModel)
             }
         }

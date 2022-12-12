@@ -66,3 +66,62 @@ struct SelectImageFromAlbum: View {
         .buttonStyle(.bordered)
     }
 }
+
+// For taking images, rather than picking from a user's album.
+struct SelectImageByTaking: View {
+    @ObservedObject var viewModel: SelectedImageModel
+    @Binding var selectedImage: UIImage
+    
+    var body: some View {
+        ImagePicker(viewModel: viewModel, selectedImage: self.$selectedImage)
+    }
+}
+
+// Michael Gall:
+// Adapted an "ImagePicker" for taking photos from a camera, based off this.
+// https://designcode.io/swiftui-advanced-handbook-imagepicker
+
+struct ImagePicker: UIViewControllerRepresentable {
+    @Environment(\.presentationMode) private var presentationMode
+    @ObservedObject var viewModel: SelectedImageModel
+    @Binding var selectedImage: UIImage
+    var photoSource: UIImagePickerController.SourceType = .camera
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
+        
+    }
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = photoSource
+        imagePicker.delegate = context.coordinator
+
+        return imagePicker
+    }
+    
+    final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        
+        var parent: ImagePicker
+        
+        init(_ parent: ImagePicker) {
+            self.parent = parent
+        }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            parent.presentationMode.wrappedValue.dismiss()
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                parent.selectedImage = image
+                
+                // Access to the image here in parent.selectedImage
+                // TODO: Now that we have the selected UIImage, how do I get it added as a SelectedImageModel to update the main view model?
+            }
+        }
+    }
+    
+    
+}
