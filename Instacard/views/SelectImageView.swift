@@ -2,12 +2,11 @@
 //  ContentView.swift
 //  Instacard
 //
-//  Created by Michael Gall on 2022-11-02.
-//
 
 import SwiftUI
 import PhotosUI
 
+/** View to corrdinate getting an image  from which to extract the contact. */
 struct SelectImageView: View {
     @StateObject var viewModel = SelectedImageModel()
     // "selected" image by camera

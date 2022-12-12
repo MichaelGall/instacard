@@ -2,11 +2,10 @@
 //  SelectImageInstructionCardView.swift
 //  Instacard
 //
-//  Created by Nick Kenyeres on 2022-12-03.
-//
 
 import SwiftUI
 
+/** Shows instructions for using the app. */
 struct SelectImageInstructionCard: View {
     var body: some View {
         VStack(alignment: .leading) {

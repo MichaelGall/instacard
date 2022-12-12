@@ -2,11 +2,10 @@
 //  ExtractTextView.swift
 //  Instacard
 //
-//  Created by Nick Kenyeres on 2022-12-03.
-//
 
 import SwiftUI
 
+/** View to manage extracting the contact from the image. */
 struct ExtractTextView: View {
     // Note:
     // I first tried to do this:
@@ -38,11 +37,5 @@ struct ExtractTextView: View {
         ExtractedText(extractedTextState: viewModel.extractedTextState)
             .onAppear(perform: viewModel.startTextExtraction)
             .navigationTitle("Extracted Contact")
-    }
-}
-
-struct ExtractTextView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExtractTextView(cgImage: UIImage(named: "sampleBusinessCard.jpg").unsafelyUnwrapped.cgImage!)
     }
 }

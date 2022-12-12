@@ -2,8 +2,6 @@
 //  ExtractableImageModel.swift
 //  Instacard
 //
-//  Created by Nick Kenyeres on 2022-12-03.
-//
 
 import Foundation
 import PhotosUI

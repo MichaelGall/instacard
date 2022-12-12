@@ -2,12 +2,11 @@
 //  SelectImageFromAlbumView.swift
 //  Instacard
 //
-//  Created by Nick Kenyeres on 2022-11-04.
-//
 
 import SwiftUI
 import PhotosUI
 
+/** Handles selecting an image by taking a photo with the camera. */
 struct SelectedImage: View {
     let selectedImageState: SelectedImageModel.SelectedImageState
     
@@ -122,6 +121,4 @@ struct ImagePicker: UIViewControllerRepresentable {
             }
         }
     }
-    
-    
 }
